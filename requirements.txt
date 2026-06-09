@@ -1,0 +1,17 @@
+# Project requirements for Steel Thickness System
+# Confirmed external packages used by the application:
+# - streamlit : web UI
+# - pandas : dataframes / Excel export
+# - numpy : numeric arrays
+# - scipy : interpolation utilities
+# - plotly : interactive visualizations
+# - reportlab : PDF report generation
+# - openpyxl : Excel engine for pandas
+
+streamlit
+pandas
+numpy
+scipy
+plotly
+reportlab
+openpyxl
