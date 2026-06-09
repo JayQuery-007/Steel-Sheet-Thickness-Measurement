@@ -24,6 +24,8 @@ from thickness_engine import (
     statistics
 )
 
+defects_df = pd.DataFrame()
+
 st.set_page_config(
     page_title="Steel Thickness System",
     page_icon="📏",
@@ -321,60 +323,53 @@ if top_file and bottom_file:
 # CAUSE DISTRIBUTION
 
 
-if len(defects_df) > 0:
+    if not defects_df.empty:
 
-    cause_df = pd.DataFrame({
-        "Cause": [
-            "Top Surface",
-            "Bottom Surface",
-            "Both"
-        ],
-        "Count": [
-            top_issue_count,
-            bottom_issue_count,
-            both_issue_count
-        ]
-    })
+        cause_df = pd.DataFrame({
+            "Cause": [
+                "Top Surface",
+                "Bottom Surface",
+                "Both"
+            ],
+            "Count": [
+                top_issue_count,
+                bottom_issue_count,
+                both_issue_count
+            ]
+        })
 
-    cause_fig = go.Figure(
-        data=[
-            go.Pie(
-                labels=cause_df["Cause"],
-                values=cause_df["Count"],
-                hole=0.4
-            )
-        ]
-    )
+        cause_fig = go.Figure(
+            data=[
+                go.Pie(
+                    labels=cause_df["Cause"],
+                    values=cause_df["Count"],
+                    hole=0.4
+                )
+            ]
+        )
 
-    cause_fig.update_layout(
-        title="Probable Cause Distribution"
-    )
+        cause_fig.update_layout(
+            title="Probable Cause Distribution"
+        )
 
-    st.plotly_chart(
-        cause_fig,
-        use_container_width=True,
-        key="executive_summary_pie_chart"
-    )
+        st.plotly_chart(
+            cause_fig,
+            use_container_width=True,
+            key="executive_summary_pie_chart"
+        )
 
-else:
+    else:
 
-    st.info(
-        """
-        All measurements are within tolerance.
+        st.info(
+            """
+            All measurements are within tolerance.
 
-        No defect classification or
-        root-cause analysis was required.
-        """
-    )
-
-    defects_df = result_df[
-        result_df["Status"] == "FAIL"
-    ]
-
-
-    
+            No defect classification or
+            root-cause analysis was required.
+            """
+        )
+  
         # INSPECTION SUMMARY
-
 
     top_issue_count = len(
             defects_df[
